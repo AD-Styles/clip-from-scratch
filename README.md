@@ -14,7 +14,7 @@
 
 이번 프로젝트의 특징은 **이전 from-scratch 프로젝트들의 부품을 직접 합쳐 만들었다는 점**입니다. Image Encoder는 [resnet-from-scratch](https://github.com/AD-Styles/resnet-from-scratch)의 `BasicBlock` 으로 만든 ResNet-20을 그대로 가져왔고, Text Encoder는 [transformer-from-scratch](https://github.com/AD-Styles/transformer-from-scratch)의 `EncoderLayer` 를 4층 쌓아 구성했습니다. 두 인코더가 뽑아낸 출력을 같은 256차원 공간에 매핑하고, Symmetric InfoNCE 손실 함수로 정렬시키는 게 이번 프로젝트의 학습 핵심입니다.
 
-데이터셋은 **CIFAR-10 (32×32 RGB, 50K)** 을 썼고, 클래스명을 10가지 캡션 템플릿(`"a photo of a {cls}"`, `"a blurry {cls}"` 등)으로 합성해서 캡션과 짝지어 학습시켰습니다. 학습 후에는 학습 곡선, 유사도 행렬 진화, 학습 때 안 본 새 템플릿으로 zero-shot 분류, multimodal 임베딩 공간 t-SNE, text→image retrieval까지 6개의 시각화로 정리했습니다. 학습 안 한 평가 템플릿으로도 **zero-shot 분류 정확도 64.6%** (random 10% 대비)가 나와서, 모델이 단순히 캡션을 외운 게 아니라 실제로 의미를 학습했다는 게 확인됐습니다.
+데이터셋은 **CIFAR-10 (32×32 RGB, 50K)** 을 썼고, 클래스명에 `"a photo of a {cls}"`, `"a blurry {cls}"` 같은 10가지 문장 양식을 적용해서 캡션을 만든 다음 이미지와 짝지어 학습시켰습니다. 학습 후에는 학습 곡선, 유사도 행렬 진화, 학습 때 안 본 새 템플릿으로 zero-shot 분류, multimodal 임베딩 공간 t-SNE, text→image retrieval까지 6개의 시각화로 정리했습니다. 학습 안 한 평가 템플릿으로도 **zero-shot 분류 정확도 64.6%** (random 10% 대비)가 나와서, 모델이 단순히 캡션을 외운 게 아니라 실제로 의미를 학습했다는 게 확인됐습니다.
 
 ---
 
@@ -50,7 +50,7 @@ clip-from-scratch/
 | **InfoNCE Loss** | 배치 안의 N×N 유사도 행렬에서 대각선(정답 짝)을 양성으로 보는 cross-entropy |
 | **Symmetric Loss** | image→text CE + text→image CE를 평균 — 양방향 정렬을 동시에 학습 |
 | **Learnable Temperature τ** | 유사도 분포의 sharpness를 조절하는 학습 가능한 스칼라 (CLIP 논문 ablation) |
-| **Zero-shot Classification** | 학습 때 못 본 캡션 템플릿으로 분류 — CLIP의 핵심 능력을 검증하는 지표 |
+| **Zero-shot Classification** | 학습 때 못 본 캡션 양식으로 분류 — CLIP의 핵심 능력을 검증하는 지표 |
 | **Cross-modal Retrieval** | 텍스트 쿼리로 이미지 검색하거나 그 반대 — 공유 임베딩 공간의 직접적 활용 |
 
 ---
