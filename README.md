@@ -1,5 +1,5 @@
 # 🔗 CLIP from Scratch — Contrastive Language-Image Pre-training in PyTorch
-### CIFAR-10 이미지와 합성 캡션을 같은 임베딩 공간에 정렬하는, PyTorch로 직접 구현한 미니 CLIP.
+### CIFAR-10 이미지와 합성 캡션을 같은 임베딩 공간에 정렬하는, PyTorch로 직접 구현한 미니 CLIP
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)
 ![CUDA](https://img.shields.io/badge/CUDA-Enabled-76B900?logo=nvidia&logoColor=white)
