@@ -62,9 +62,9 @@ clip-from-scratch/
 │   ├ Conv 3 → 16                 │      [ Token Embedding + Positional Encoding ]
 │   ├ Stage 1: 3 × BasicBlock(16) │           ↓
 │   ├ Stage 2: 3 × BasicBlock(32) │      ┌─────────────────────────────────┐
-│   ├ Stage 3: 3 × BasicBlock(64) │      │  Text Encoder (Transformer)    │
-│   └ Global Avg Pool → 64-dim    │      │   ├ EncoderLayer × 4           │
-│                                 │      │   │   (8 heads × d_k=32)       │
+│   ├ Stage 3: 3 × BasicBlock(64) │      │  Text Encoder (Transformer)     │
+│   └ Global Avg Pool → 64-dim    │      │   ├ EncoderLayer × 4            │
+│                                 │      │   │   (8 heads × d_k=32)        │
 │ → Projection: Linear(64 → 256)  │      │   └ Mean Pool (PAD 제외)        │
 └─────────────────────────────────┘      │                                 │
    ↓                                     │ → Projection: Linear(256 → 256) │
@@ -103,7 +103,7 @@ image_embedding (256-dim)                [ L2 Normalize ]
 
 ## 📊 학습 결과 (Training Results)
 
-RTX 4060에서 **30 epochs** 학습 진행 (batch 256, CIFAR-10 50K 샘플). 5개 지표(InfoNCE Loss, Image→Text Acc, Text→Image Acc, Temperature τ, learnable scale)로 학습 동학을 모두 기록.
+RTX 4060에서 **30 epochs** 학습 진행 (batch 256, CIFAR-10 50K 샘플). 4개 지표(InfoNCE Loss, Image→Text Acc, Text→Image Acc, Temperature τ)로 학습 추이를 기록.
 
 | Epoch | Loss | i2t Acc | t2i Acc | τ | 비고 |
 |-------|------|---------|---------|---|------|
