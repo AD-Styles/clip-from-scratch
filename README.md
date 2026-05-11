@@ -86,12 +86,12 @@ image_embedding (256-dim)                [ L2 Normalize ]
 | Component | 차원 / 설정 |
 |-----------|------------|
 | Image input | 3 × 32 × 32 (CIFAR-10) |
-| Image encoder | ResNet-20 (6n+2, n=3) — [resnet-from-scratch](https://github.com/AD-Styles/resnet-from-scratch)의 BasicBlock 재활용 |
+| Image encoder | ResNet-20 (6n+2, n=3) — [resnet-from-scratch](https://github.com/AD-Styles/resnet-from-scratch)의 `BasicBlock` 재활용 |
 | Text input | Word-level tokens, max length 16 |
-| Text encoder | 4-layer Transformer Encoder — [transformer-from-scratch](https://github.com/AD-Styles/transformer-from-scratch)의 EncoderLayer 재활용 |
-| Embed dim | 256 (joint multimodal space) |
+| Text encoder | 4-layer Transformer Encoder — [transformer-from-scratch](https://github.com/AD-Styles/transformer-from-scratch)의 `EncoderLayer` 재활용 |
+| Embed dim | 256 (이미지·텍스트 공유 공간) |
 | Transformer d_model | 256 / 8 heads (d_k=32) / d_ff=1024 |
-| Loss | Symmetric InfoNCE (BCE-style cross-entropy on similarity matrix) |
+| Loss | Symmetric InfoNCE (유사도 행렬에 대한 multi-class Cross-Entropy) |
 | Optimizer | AdamW (lr=5e-4, weight_decay=0.2, betas=(0.9, 0.98)) |
 | LR Schedule | Linear warmup 1 epoch → Cosine decay |
 | Temperature τ | Learnable parameter, init 0.07 (`logit_scale = log(1/τ)`) |
