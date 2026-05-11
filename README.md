@@ -23,12 +23,12 @@
 ```
 clip-from-scratch/
 ├── results/
-│   ├── 01_dataset_overview.png         # CIFAR-10 샘플 + 합성 캡션 + 토큰 길이 통계
-│   ├── 02_training_curve.png           # InfoNCE Loss + Retrieval Acc + Temperature τ
-│   ├── 03_similarity_evolution.png     # 유사도 행렬 진화 (epoch 1 / 15 / 30)
-│   ├── 04_zero_shot.png                # 학습 템플릿 vs Zero-shot 템플릿 정확도 + Confusion Matrix
-│   ├── 05_embedding_space.png          # Multimodal Embedding Space (t-SNE)
-│   └── 06_retrieval_examples.png       # Text → Image Retrieval top-5
+│   ├── 01_dataset_overview.png         # CIFAR-10 샘플 + 합성 캡션 + 어휘 통계
+│   ├── 02_training_curve.png           # InfoNCE Loss · Retrieval Acc · Temperature τ (∩자 곡선)
+│   ├── 03_similarity_evolution.png     # 유사도 행렬 진화 — 대각선이 점점 강해지는 과정
+│   ├── 04_zero_shot.png                # 학습 양식 vs Zero-shot 양식 정확도 (64.4% vs 64.6%) + Confusion Matrix
+│   ├── 05_embedding_space.png          # Multimodal Embedding Space (t-SNE) — 같은 클래스 이미지·텍스트가 모이는지
+│   └── 06_retrieval_examples.png       # Text → Image Retrieval top-5 (캡션 쿼리로 이미지 검색)
 ├── src/
 │   └── main.py                         # CLIP 모델 + 학습 루프 + 시각화 통합 스크립트
 ├── .gitignore
@@ -44,14 +44,10 @@ clip-from-scratch/
 | 개념 | 한 줄 설명 |
 |------|-----------|
 | **Contrastive Learning** | 같은 짝(positive)은 가깝게, 다른 짝(negative)은 멀게 — CLIP의 핵심 학습 원리 |
-| **Joint Embedding Space** | 이미지와 텍스트를 같은 차원(256-dim)에 매핑해서 직접 비교 가능하게 만든 공간 |
-| **Image Encoder (ResNet-20)** | 32×32 이미지 → 64-dim feature → projection → 256-dim image embedding |
-| **Text Encoder (Transformer)** | 토큰 시퀀스 → 256-dim hidden → mean pooling → projection → 256-dim text embedding |
-| **InfoNCE Loss** | 배치 안의 N×N 유사도 행렬에서 대각선(정답 짝)을 양성으로 보는 cross-entropy |
-| **Symmetric Loss** | image→text CE + text→image CE를 평균 — 양방향 정렬을 동시에 학습 |
-| **Learnable Temperature τ** | 유사도 분포의 sharpness를 조절하는 학습 가능한 스칼라 (CLIP 논문 ablation) |
+| **Joint Embedding Space** | 이미지와 텍스트를 같은 256차원 공간에 매핑 — 두 모달의 직접 비교를 가능케 함 |
+| **InfoNCE Loss** | 배치 N×N 유사도 행렬의 대각선(정답 짝)을 양성으로 보는 cross-entropy. image→text + text→image 평균이 Symmetric InfoNCE |
+| **Learnable Temperature τ** | 유사도 분포의 sharpness를 조절하는 학습 가능한 스칼라 — 학습 진행에 따라 ∩자로 적응 |
 | **Zero-shot Classification** | 학습 때 못 본 캡션 양식으로 분류 — CLIP의 핵심 능력을 검증하는 지표 |
-| **Cross-modal Retrieval** | 텍스트 쿼리로 이미지 검색하거나 그 반대 — 공유 임베딩 공간의 직접적 활용 |
 
 ---
 
